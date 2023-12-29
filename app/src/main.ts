@@ -1,7 +1,9 @@
 import {loadGLTF} from "../../libs/loader.js";
 import {mockWithVideo} from '../../libs/camera-mock.js';
 import Stats from '../../libs/three.js-r132/examples/jsm/libs/stats.module.js'
-const THREE = window.MINDAR.FACE.THREE;
+import * as THREEjs from 'three'
+const THREE = (<any> window).MINDAR.FACE.THREE;
+const a = new THREE().Scene();
 
 const capture = (mindarThree) => {
   const {video, renderer, scene, camera} = mindarThree;
@@ -9,7 +11,7 @@ const capture = (mindarThree) => {
 
   // output canvas
   const canvas = document.createElement('canvas');
-  const context = canvas.getContext('2d');
+  const context : CanvasRenderingContext2D | null = canvas.getContext('2d');
   canvas.width = renderCanvas.width;
   canvas.height = renderCanvas.height;
 
@@ -18,11 +20,11 @@ const capture = (mindarThree) => {
   const sw = video.videoWidth - sx * 2; 
   const sh = video.videoHeight - sy * 2; 
 
-  context.drawImage(video, sx, sy, sw, sh, 0, 0, canvas.width, canvas.height);
+  context?.drawImage(video, sx, sy, sw, sh, 0, 0, canvas.width, canvas.height);
   
   renderer.preserveDrawingBuffer = true;
   renderer.render(scene, camera); // empty if not run
-  context.drawImage(renderCanvas, 0, 0, canvas.width, canvas.height);
+  context?.drawImage(renderCanvas, 0, 0, canvas.width, canvas.height);
   renderer.preserveDrawingBuffer = false;
 
   const data = canvas.toDataURL('image/png');
