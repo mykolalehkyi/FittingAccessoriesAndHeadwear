@@ -3,7 +3,6 @@ import {mockWithVideo} from '../../libs/camera-mock.js';
 import Stats from '../../libs/three.js-r132/examples/jsm/libs/stats.module.js'
 import * as THREEjs from 'three'
 const THREE = (<any> window).MINDAR.FACE.THREE;
-const a = new THREE().Scene();
 
 const capture = (mindarThree) => {
   const {video, renderer, scene, camera} = mindarThree;
@@ -36,7 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     //mockWithVideo('../../assets/mock-videos/face1.mp4');
 
-    const mindarThree = new window.MINDAR.FACE.MindARThree({
+    const mindarThree = new (<any> window).MINDAR.FACE.MindARThree({
       container: document.body,
     });
     const {renderer, scene, camera} = mindarThree;
@@ -126,12 +125,12 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     });
 
-    const previewImage = document.querySelector("#preview-image");
-    const previewClose = document.querySelector("#preview-close");
-    const preview = document.querySelector("#preview");
-    const previewShare = document.querySelector("#preview-share");
+    const previewImage: any = document.querySelector("#preview-image");
+    const previewClose: any = document.querySelector("#preview-close");
+    const preview: any = document.querySelector("#preview");
+    const previewShare: any = document.querySelector("#preview-share");
 
-    document.querySelector("#capture").addEventListener("click", () => {
+    document.querySelector("#capture")?.addEventListener("click", () => {
       const data = capture(mindarThree);
       preview.style.visibility = "visible";
       previewImage.src = data;
@@ -146,10 +145,10 @@ document.addEventListener('DOMContentLoaded', () => {
       canvas.width = previewImage.width;
       canvas.height = previewImage.height;
       const context = canvas.getContext('2d');
-      context.drawImage(previewImage, 0, 0, canvas.width, canvas.height);
+      context?.drawImage(previewImage, 0, 0, canvas.width, canvas.height);
 
       canvas.toBlob((blob) => {
-	const file = new File([blob], "photo.png", {type: "image/png"});
+	const file = new File([<any>blob], "photo.png", {type: "image/png"});
 	const files = [file];
 	if (navigator.canShare && navigator.canShare({files})) {
 	  navigator.share({
@@ -165,7 +164,7 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     });
 
-	const stats = new Stats();
+	const stats = Stats();
 	document.body.appendChild(stats.dom);
 
     await mindarThree.start();
