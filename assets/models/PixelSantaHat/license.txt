@@ -1,0 +1,8 @@
+Model Information:
+* title:	Pixel Santa Hat
+* source:	https://sketchfab.com/3d-models/pixel-santa-hat-7edff3661dae4966ba6ddc35ef8d93d7
+* author:	xDeizs (https://sketchfab.com/gamemode3232321)
+
+Model License:
+* license type:	SKETCHFAB Standard (https://sketchfab.com/licenses)
+* requirements:	Under basic restrictions, use worldwide, on all types of media, commercially or not, and in all types of derivative works

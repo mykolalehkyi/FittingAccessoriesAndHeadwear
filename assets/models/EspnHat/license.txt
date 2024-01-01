@@ -1,0 +1,8 @@
+Model Information:
+* title:	ESPN Hat
+* source:	https://sketchfab.com/3d-models/espn-hat-1317f928db1747489a0b19c755c8ab3a
+* author:	The Cable Center (https://sketchfab.com/thecablecenter)
+
+Model License:
+* license type:	CC0-1.0 (http://creativecommons.org/publicdomain/zero/1.0/)
+* requirements:	Credit is not mandatory. Commercial use is allowed.

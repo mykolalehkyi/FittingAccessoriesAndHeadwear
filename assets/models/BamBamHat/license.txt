@@ -1,0 +1,11 @@
+Model Information:
+* title:	Bambam Hat
+* source:	https://sketchfab.com/3d-models/bambam-hat-1f7498b21a494576bd95abb3af91b58d
+* author:	markdo (https://sketchfab.com/markdo)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Bambam Hat" (https://sketchfab.com/3d-models/bambam-hat-1f7498b21a494576bd95abb3af91b58d) by markdo (https://sketchfab.com/markdo) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
