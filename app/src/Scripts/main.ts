@@ -1,14 +1,21 @@
-import {loadGLTF} from "../../../libs/loader.js";
+import {loadGLTF, loadRGBE,loadTexture} from "../../../libs/loader.js";
 import {mockWithVideo} from '../../../libs/camera-mock.js';
 import Stats from '../../../libs/three.js-r132/examples/jsm/libs/stats.module.js'
-import * as THREEjs from 'three'
+import {GUI} from '../../../libs/three.js-r132/examples/jsm/libs/dat.gui.module.js'
+import * as THREEts from 'three'
+import * as GUIts from 'dat.gui'
 const THREE = (<any> window).MINDAR.FACE.THREE;
 
 const capture = (mindarThree) => {
-  const {video, renderer, scene, camera} = mindarThree;
+  const {video, renderer, scene, camera}:{
+	video: any,
+	renderer: THREEts.Renderer, 
+	scene: THREEts.Scene, 
+	camera: THREEts.Camera
+  } = mindarThree;
   const renderCanvas = renderer.domElement;
 
-  // Щutput canvas
+  // Output canvas
   const canvas = document.createElement('canvas');
   const context : CanvasRenderingContext2D | null = canvas.getContext('2d');
   canvas.width = renderCanvas.width;
@@ -21,10 +28,10 @@ const capture = (mindarThree) => {
 
   context?.drawImage(video, sx, sy, sw, sh, 0, 0, canvas.width, canvas.height);
   
-  renderer.preserveDrawingBuffer = true;
+  (<any>renderer).preserveDrawingBuffer = true;
   renderer.render(scene, camera); // empty if not run
   context?.drawImage(renderCanvas, 0, 0, canvas.width, canvas.height);
-  renderer.preserveDrawingBuffer = false;
+  (<any>renderer).preserveDrawingBuffer = false;
 
   const data = canvas.toDataURL('image/png');
   return data;
@@ -40,11 +47,22 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     const {renderer, scene, camera} = mindarThree;
 
-    const light: THREEjs.HemisphereLight = new THREE.HemisphereLight(0xffffff, 0xbbbbff, 1);
-    const light2 = new THREE.DirectionalLight(0xffffff, 0.6);
+	//Adding light
+    const light: THREEts.HemisphereLight = new THREE.HemisphereLight(0xffffff, 0xbbbbff, 1);
+    const light2 = new THREE.DirectionalLight(0xffffff, 1);
     light2.position.set(-0.5, 1, 1);
-    scene.add(light);
-    scene.add(light2);
+    // scene.add(light);
+    // scene.add(light2);
+	const pointLight:THREEts.PointLight = new THREE.PointLight(0xffffff,1);
+	pointLight.position.set(0,0,1000);
+	scene.add(pointLight);
+	const sphereSize = 4;
+	const pointLightHelper:THREEts.PointLightHelper = new THREE.PointLightHelper( pointLight, sphereSize );
+	scene.add( pointLightHelper );
+
+	const background = await loadRGBE('../../../assets/models/Environment/thatch_chapel_4k.hdr');
+	background.mapping = THREE.EquirectangularReflectionMapping;
+	scene.environment = background;
 
     const occluder = await loadGLTF('../../../assets/models/sparkar-occluder/headOccluder.glb');
     occluder.scene.scale.set(0.065, 0.065, 0.065);
@@ -60,9 +78,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const occluderAnchor = mindarThree.addAnchor(168);
     occluderAnchor.group.add(occluder.scene);
 
-    const glasses = await loadGLTF('../../../assets/models/glasses1/scene.gltf');
-    glasses.scene.scale.set(0.01, 0.01, 0.01);
+    const glasses = await loadGLTF('../../../assets/models/CroissantGlasses/scene.gltf');
+    glasses.scene.scale.set(5, 5, 5);
     glasses.scene.renderOrder = 1;
+	// glasses.scene.environment = background;
     const glassesAnchor = mindarThree.addAnchor(168);
     glassesAnchor.group.add(glasses.scene);
 
@@ -173,6 +192,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
 	const stats = Stats();
 	document.body.appendChild(stats.dom);
+
+	const gui:GUIts.GUI = new GUI();
+	const pointLightFolder = gui.addFolder("Point Light");
+	pointLightFolder.add(pointLight.position,<never>"x",-10,1000);
+	pointLightFolder.add(pointLight.position,<never>"y",-10,1000);
+	pointLightFolder.add(pointLight.position,<never>"z",-10,1000);
+	pointLightFolder.open();
 
     await mindarThree.start();
     renderer.setAnimationLoop(() => {

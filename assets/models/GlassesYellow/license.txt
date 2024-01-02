@@ -1,0 +1,11 @@
+Model Information:
+* title:	Glasses yellow
+* source:	https://sketchfab.com/3d-models/glasses-yellow-2c38a0d71fc64064b162b33154334265
+* author:	vinigor (https://sketchfab.com/vinigor)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Glasses yellow" (https://sketchfab.com/3d-models/glasses-yellow-2c38a0d71fc64064b162b33154334265) by vinigor (https://sketchfab.com/vinigor) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
