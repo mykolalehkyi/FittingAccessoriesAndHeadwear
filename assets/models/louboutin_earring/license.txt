@@ -1,0 +1,11 @@
+Model Information:
+* title:	Louboutin Earring
+* source:	https://sketchfab.com/3d-models/louboutin-earring-36e269a8f74143a3b567f582781acaa2
+* author:	David_Boc (https://sketchfab.com/David_Boc)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Louboutin Earring" (https://sketchfab.com/3d-models/louboutin-earring-36e269a8f74143a3b567f582781acaa2) by David_Boc (https://sketchfab.com/David_Boc) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

@@ -1,0 +1,11 @@
+Model Information:
+* title:	Earring
+* source:	https://sketchfab.com/3d-models/earring-27d6d83010e4412eabb500f9103ad9b6
+* author:	cubesugar811 (https://sketchfab.com/cubesugar0811)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Earring" (https://sketchfab.com/3d-models/earring-27d6d83010e4412eabb500f9103ad9b6) by cubesugar811 (https://sketchfab.com/cubesugar0811) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

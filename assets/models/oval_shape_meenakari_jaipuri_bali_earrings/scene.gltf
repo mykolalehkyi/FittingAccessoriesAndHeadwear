@@ -1,0 +1,527 @@
+{
+  "accessors": [
+    {
+      "bufferView": 2,
+      "componentType": 5126,
+      "count": 56298,
+      "max": [
+        11.918657302856445,
+        8.153440475463867,
+        0.6147994995117188
+      ],
+      "min": [
+        0.8822574615478516,
+        -1.234560489654541,
+        -1.651900291442871
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 675576,
+      "componentType": 5126,
+      "count": 56298,
+      "max": [
+        0.9999554753303528,
+        0.9993240833282471,
+        0.999874472618103
+      ],
+      "min": [
+        -0.9999763369560242,
+        -0.9999886751174927,
+        -0.9999562501907349
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 1,
+      "componentType": 5126,
+      "count": 56298,
+      "max": [
+        1.0,
+        1.0
+      ],
+      "min": [
+        0.0,
+        0.0
+      ],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 0,
+      "componentType": 5125,
+      "count": 56298,
+      "type": "SCALAR"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 1351152,
+      "componentType": 5126,
+      "count": 325,
+      "max": [
+        0.642957329750061,
+        0.5738397836685181,
+        0.04120159149169922
+      ],
+      "min": [
+        -0.19634205102920532,
+        -0.2690606713294983,
+        -0.20279788970947266
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 1355052,
+      "componentType": 5126,
+      "count": 325,
+      "max": [
+        0.9934452772140503,
+        0.9976552128791809,
+        0.994583249092102
+      ],
+      "min": [
+        -0.9934883713722229,
+        -0.9976528286933899,
+        -0.99453204870224
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 450384,
+      "componentType": 5126,
+      "count": 325,
+      "max": [
+        1.0,
+        1.0
+      ],
+      "min": [
+        0.0,
+        0.0
+      ],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 0,
+      "byteOffset": 225192,
+      "componentType": 5125,
+      "count": 1719,
+      "type": "SCALAR"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 1358952,
+      "componentType": 5126,
+      "count": 7440,
+      "max": [
+        12.573858261108398,
+        8.697739601135254,
+        0.33970069885253906
+      ],
+      "min": [
+        0.05445701256394386,
+        -1.8319615125656128,
+        -1.9845991134643555
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 1448232,
+      "componentType": 5126,
+      "count": 7440,
+      "max": [
+        0.8836211562156677,
+        0.9211394786834717,
+        0.9783273339271545
+      ],
+      "min": [
+        -0.8726701140403748,
+        -0.9137381911277771,
+        -0.9784101843833923
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 452984,
+      "componentType": 5126,
+      "count": 7440,
+      "max": [
+        1.0,
+        1.0
+      ],
+      "min": [
+        0.0,
+        0.0
+      ],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 0,
+      "byteOffset": 232068,
+      "componentType": 5125,
+      "count": 7440,
+      "type": "SCALAR"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 1537512,
+      "componentType": 5126,
+      "count": 725,
+      "max": [
+        0.5330495834350586,
+        0.25728273391723633,
+        1.0262031555175781
+      ],
+      "min": [
+        -4.321350574493408,
+        -2.3404173851013184,
+        -1.681696891784668
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 1546212,
+      "componentType": 5126,
+      "count": 725,
+      "max": [
+        0.9914113879203796,
+        0.9954593777656555,
+        0.9601399302482605
+      ],
+      "min": [
+        -0.9937241077423096,
+        -0.9948392510414124,
+        -0.9592806696891785
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 512504,
+      "componentType": 5126,
+      "count": 725,
+      "max": [
+        1.0,
+        1.0
+      ],
+      "min": [
+        0.0,
+        0.0
+      ],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 0,
+      "byteOffset": 261828,
+      "componentType": 5125,
+      "count": 3825,
+      "type": "SCALAR"
+    }
+  ],
+  "asset": {
+    "extras": {
+      "author": "DineshThennarasan (https://sketchfab.com/dineshthennarasan)",
+      "license": "CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)",
+      "source": "https://sketchfab.com/3d-models/oval-shape-meenakari-jaipuri-bali-earrings-432629653a2f4a1ebf2b97c470dc20c5",
+      "title": "Oval Shape Meenakari jaipuri Bali Earrings"
+    },
+    "generator": "Sketchfab-12.67.0",
+    "version": "2.0"
+  },
+  "bufferViews": [
+    {
+      "buffer": 0,
+      "byteLength": 277128,
+      "name": "floatBufferViews",
+      "target": 34963
+    },
+    {
+      "buffer": 0,
+      "byteLength": 518304,
+      "byteOffset": 277128,
+      "byteStride": 8,
+      "name": "floatBufferViews",
+      "target": 34962
+    },
+    {
+      "buffer": 0,
+      "byteLength": 1554912,
+      "byteOffset": 795432,
+      "byteStride": 12,
+      "name": "floatBufferViews",
+      "target": 34962
+    }
+  ],
+  "buffers": [
+    {
+      "byteLength": 2350344,
+      "uri": "scene.bin"
+    }
+  ],
+  "extensionsRequired": [
+    "KHR_materials_pbrSpecularGlossiness"
+  ],
+  "extensionsUsed": [
+    "KHR_materials_pbrSpecularGlossiness"
+  ],
+  "materials": [
+    {
+      "doubleSided": true,
+      "extensions": {
+        "KHR_materials_pbrSpecularGlossiness": {
+          "diffuseFactor": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "glossinessFactor": 0.9529344512195121,
+          "specularFactor": [
+            0.21223075741405512,
+            0.006995410187265383,
+            0.5028864580325685
+          ]
+        }
+      },
+      "name": "wire_088088225"
+    },
+    {
+      "doubleSided": true,
+      "extensions": {
+        "KHR_materials_pbrSpecularGlossiness": {
+          "diffuseFactor": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "glossinessFactor": 1.0,
+          "specularFactor": [
+            0.9301108583754235,
+            0.7912979403326302,
+            0.09758734714186246
+          ]
+        }
+      },
+      "name": "wire_088144225"
+    },
+    {
+      "doubleSided": true,
+      "extensions": {
+        "KHR_materials_pbrSpecularGlossiness": {
+          "diffuseFactor": [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ],
+          "glossinessFactor": 1.0,
+          "specularFactor": [
+            0.9367850332133464,
+            0.7960964019766414,
+            0.0994471019403319
+          ]
+        }
+      },
+      "name": "Material.004"
+    }
+  ],
+  "meshes": [
+    {
+      "name": "Tube02.002_wire_088088225_0",
+      "primitives": [
+        {
+          "attributes": {
+            "NORMAL": 1,
+            "POSITION": 0,
+            "TEXCOORD_0": 2
+          },
+          "indices": 3,
+          "material": 0,
+          "mode": 4
+        }
+      ]
+    },
+    {
+      "name": "Tube02.002_wire_088144225_0",
+      "primitives": [
+        {
+          "attributes": {
+            "NORMAL": 5,
+            "POSITION": 4,
+            "TEXCOORD_0": 6
+          },
+          "indices": 7,
+          "material": 1,
+          "mode": 4
+        }
+      ]
+    },
+    {
+      "name": "Tube02.002_Material.004_0",
+      "primitives": [
+        {
+          "attributes": {
+            "NORMAL": 9,
+            "POSITION": 8,
+            "TEXCOORD_0": 10
+          },
+          "indices": 11,
+          "material": 2,
+          "mode": 4
+        }
+      ]
+    },
+    {
+      "name": "Line09.001_wire_088144225_0",
+      "primitives": [
+        {
+          "attributes": {
+            "NORMAL": 13,
+            "POSITION": 12,
+            "TEXCOORD_0": 14
+          },
+          "indices": 15,
+          "material": 1,
+          "mode": 4
+        }
+      ]
+    }
+  ],
+  "nodes": [
+    {
+      "children": [
+        1
+      ],
+      "matrix": [
+        0.0009439747082069516,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        2.0960449114303428e-19,
+        -0.0009439747082069516,
+        0.0,
+        0.0,
+        0.0009439747082069516,
+        2.0960449114303428e-19,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "name": "Sketchfab_model"
+    },
+    {
+      "children": [
+        2
+      ],
+      "matrix": [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        -1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "name": "4e01f49de03c4fd4a7901f9425edef34.fbx"
+    },
+    {
+      "children": [
+        3,
+        7
+      ],
+      "name": "RootNode"
+    },
+    {
+      "children": [
+        4,
+        5,
+        6
+      ],
+      "matrix": [
+        -0.01566061891034698,
+        -8.803017263025891,
+        4.744116547038393,
+        0.0,
+        -0.017601449268677127,
+        -4.744090750169234,
+        -8.803027498715561,
+        0.0,
+        9.999971292989768,
+        -0.022136416453114177,
+        -0.008065045676050915,
+        0.0,
+        91.70318603515625,
+        -16.306703567504883,
+        54.79122543334961,
+        1.0
+      ],
+      "name": "Tube02.002"
+    },
+    {
+      "mesh": 0,
+      "name": "Tube02.002_wire_088088225_0"
+    },
+    {
+      "mesh": 1,
+      "name": "Tube02.002_wire_088144225_0"
+    },
+    {
+      "mesh": 2,
+      "name": "Tube02.002_Material.004_0"
+    },
+    {
+      "children": [
+        8
+      ],
+      "matrix": [
+        -1.410934267198627e-06,
+        -8.660252772898783,
+        5.000002190949217,
+        0.0,
+        -2.443810550589731e-06,
+        -5.000002190948818,
+        -8.660252772898783,
+        0.0,
+        9.999999999999602,
+        -2.443810550589731e-06,
+        -1.410934267198627e-06,
+        0.0,
+        92.22599029541016,
+        -17.66119956970215,
+        54.656654357910156,
+        1.0
+      ],
+      "name": "Line09.001"
+    },
+    {
+      "mesh": 3,
+      "name": "Line09.001_wire_088144225_0"
+    }
+  ],
+  "scene": 0,
+  "scenes": [
+    {
+      "name": "Sketchfab_Scene",
+      "nodes": [
+        0
+      ]
+    }
+  ]
+}

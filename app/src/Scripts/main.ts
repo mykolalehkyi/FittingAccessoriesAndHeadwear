@@ -9,6 +9,7 @@ const THREE = (<any>window).MINDAR.FACE.THREE;
 
 class AppRun {
 	private tryOnService: TryOnService = new TryOnService();
+	private gui: GUIts.GUI;
 
   constructor() {
 	this.init();
@@ -78,6 +79,7 @@ class AppRun {
 
         //Adding light
         const pointLight: THREEts.PointLight = this.addLightToScene(scene);
+        this.gui = this.addGui(pointLight);
 
         await this.addBackgroundToScene(scene);
 
@@ -89,7 +91,6 @@ class AppRun {
 
         const stats = this.addStats();
 
-        this.addGui(pointLight);
 
         await mindarThree.start();
         renderer.setAnimationLoop(() => {
@@ -106,7 +107,8 @@ class AppRun {
 
 		for(const tryOnModel of tryOnModels) {
 			const loadedModels: any[] = [];
-			for(const element of tryOnModel.elements) {
+			for(let i = 0; i< tryOnModel.elements.length; i++) {
+				const element = tryOnModel.elements[i];
 				const loaded = await loadGLTF(
 					element.path
 				);
@@ -117,6 +119,8 @@ class AppRun {
 				anchor.group.add(loaded.scene);
 
 				loadedModels.push(loaded);
+
+				this.addModelToGui(this.gui,tryOnModel.buttonId + " " + i,loaded.scene);
 			};
 
 			const button = document.querySelector(tryOnModel.buttonId);
@@ -188,13 +192,30 @@ class AppRun {
 		return stats;
 	}
 
-	private addGui(pointLight: THREEts.PointLight) {
+	private addGui(pointLight: THREEts.PointLight): GUIts.GUI {
 		const gui: GUIts.GUI = new GUI();
 		const pointLightFolder = gui.addFolder("Point Light");
 		pointLightFolder.add(pointLight.position, <never>"x", -10, 1000);
 		pointLightFolder.add(pointLight.position, <never>"y", -10, 1000);
 		pointLightFolder.add(pointLight.position, <never>"z", -10, 1000);
 		pointLightFolder.open();
+		return gui;
+	}
+
+	private addModelToGui(gui: GUIts.GUI,name:string,model:any) {
+		const modelFolder = gui.addFolder(name);
+		const positionFolder = modelFolder.addFolder("position");
+		positionFolder.add(model.position, <never>"x", -10, 10);
+		positionFolder.add(model.position, <never>"y", -10, 10);
+		positionFolder.add(model.position, <never>"z", -10, 10);
+		const scaleFolder = modelFolder.addFolder("scale");
+		scaleFolder.add(model.scale, <never>"x", -10, 10);
+		scaleFolder.add(model.scale, <never>"y", -10, 10);
+		scaleFolder.add(model.scale, <never>"z", -10, 10);
+		const rotationFolder = modelFolder.addFolder("rotation");
+		rotationFolder.add(model.rotation, <never>"x", -10, 10);
+		rotationFolder.add(model.rotation, <never>"y", -10, 10);
+		rotationFolder.add(model.rotation, <never>"z", -10, 10);
 	}
 
 	private async addOccluder(mindarThree: any) {

@@ -42,12 +42,12 @@ class AppRun {
                 const { renderer, scene, camera } = mindarThree;
                 //Adding light
                 const pointLight = this.addLightToScene(scene);
+                this.gui = this.addGui(pointLight);
                 await this.addBackgroundToScene(scene);
                 await this.addOccluder(mindarThree);
                 await this.addModelsToScene(mindarThree);
                 this.initPreviewShare(mindarThree);
                 const stats = this.addStats();
-                this.addGui(pointLight);
                 await mindarThree.start();
                 renderer.setAnimationLoop(() => {
                     renderer.render(scene, camera);
@@ -61,7 +61,8 @@ class AppRun {
         const tryOnModels = this.tryOnService.getTryOnModels();
         for (const tryOnModel of tryOnModels) {
             const loadedModels = [];
-            for (const element of tryOnModel.elements) {
+            for (let i = 0; i < tryOnModel.elements.length; i++) {
+                const element = tryOnModel.elements[i];
                 const loaded = await loadGLTF(element.path);
                 loaded.scene.rotation.set(element.rotation[0], element.rotation[1], element.rotation[2]);
                 loaded.scene.position.set(element.position[0], element.position[1], element.position[2]);
@@ -69,6 +70,7 @@ class AppRun {
                 const anchor = mindarThree.addAnchor(element.anchor);
                 anchor.group.add(loaded.scene);
                 loadedModels.push(loaded);
+                this.addModelToGui(this.gui, tryOnModel.buttonId + " " + i, loaded.scene);
             }
             ;
             const button = document.querySelector(tryOnModel.buttonId);
@@ -142,6 +144,22 @@ class AppRun {
         pointLightFolder.add(pointLight.position, "y", -10, 1000);
         pointLightFolder.add(pointLight.position, "z", -10, 1000);
         pointLightFolder.open();
+        return gui;
+    }
+    addModelToGui(gui, name, model) {
+        const modelFolder = gui.addFolder(name);
+        const positionFolder = modelFolder.addFolder("position");
+        positionFolder.add(model.position, "x", -10, 10);
+        positionFolder.add(model.position, "y", -10, 10);
+        positionFolder.add(model.position, "z", -10, 10);
+        const scaleFolder = modelFolder.addFolder("scale");
+        scaleFolder.add(model.scale, "x", -10, 10);
+        scaleFolder.add(model.scale, "y", -10, 10);
+        scaleFolder.add(model.scale, "z", -10, 10);
+        const rotationFolder = modelFolder.addFolder("rotation");
+        rotationFolder.add(model.rotation, "x", -10, 10);
+        rotationFolder.add(model.rotation, "y", -10, 10);
+        rotationFolder.add(model.rotation, "z", -10, 10);
     }
     async addOccluder(mindarThree) {
         const occluder = await loadGLTF("../../../assets/models/sparkar-occluder/headOccluder.glb");
