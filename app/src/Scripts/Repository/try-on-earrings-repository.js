@@ -3,7 +3,7 @@ export class TryOnEarringsRepository {
         this.earrings = [
             {
                 buttonId: "#earring1",
-                visible: false,
+                visible: true,
                 elements: [
                     {
                         path: "../../../assets/models/oval_shape_meenakari_jaipuri_bali_earrings/scene.gltf",
@@ -43,7 +43,7 @@ export class TryOnEarringsRepository {
             },
             {
                 buttonId: "#earring3",
-                visible: true,
+                visible: false,
                 elements: [
                     {
                         path: "../../../assets/models/ChinaEarring/scene.gltf",
