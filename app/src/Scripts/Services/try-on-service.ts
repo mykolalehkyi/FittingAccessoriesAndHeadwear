@@ -1,3 +1,4 @@
+import { TryOnModel } from "../Models/try-on-model.js";
 import { TryOnEarringsRepository } from "../Repository/try-on-earrings-repository.js";
 import { TryOnGlassesRepository } from "../Repository/try-on-glasses-repository.js";
 import { TryOnHatsRepository } from "../Repository/try-on-hats-repository.js";

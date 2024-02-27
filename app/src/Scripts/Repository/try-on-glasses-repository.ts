@@ -1,8 +1,12 @@
+import { TryOnModel } from "../Models/try-on-model";
+
 export class TryOnGlassesRepository{
 	private glasses: TryOnModel[] = [
 		{
-			buttonId: "#glasses1",
-			visible: true,
+			buttonId: "glasses1",
+			buttonImagePath:"../../../assets/models/LoftGlasses/thumbnail.png",
+			visible: false,
+			loaded:undefined,
 			elements:[
 				{
 					path: "../../../assets/models/LoftGlasses/scene.gltf",
@@ -14,8 +18,10 @@ export class TryOnGlassesRepository{
 			]
 		},
 		{
-			buttonId: "#glasses2",
+			buttonId: "glasses2",
+			buttonImagePath:"../../../assets/models/RoundGlasses/thumbnail.png",
 			visible: false,
+			loaded:undefined,
 			elements:[
 				{
 					path: "../../../assets/models/RoundGlasses/scene.gltf",
@@ -27,8 +33,10 @@ export class TryOnGlassesRepository{
 			]
 		},
 		{
-			buttonId: "#glasses3",
+			buttonId: "glasses3",
+			buttonImagePath:"../../../assets/models/apple_ar_glasses_concept_art/thumbnail.png",
 			visible: false,
+			loaded:undefined,
 			elements:[
 				{
 					path: "../../../assets/models/apple_ar_glasses_concept_art/scene.gltf",

@@ -1,4 +1,4 @@
-class TryOnElementModel{
+export class TryOnElementModel{
 	public path:string;
 	// x,y,z
 	public scale:number[];

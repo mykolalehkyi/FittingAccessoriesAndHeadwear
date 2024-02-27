@@ -1,8 +1,12 @@
+import { TryOnModel } from "../Models/try-on-model";
+
 export class TryOnEarringsRepository{
 	private earrings: TryOnModel[] = [
 		{
-			buttonId: "#earring1",
-			visible: true,
+			buttonId: "earring1",
+			buttonImagePath:"../../../assets/models/oval_shape_meenakari_jaipuri_bali_earrings/thumbnail.png",
+			visible: false,
+			loaded:undefined,
 			elements:[
 				{
 					path: "../../../assets/models/oval_shape_meenakari_jaipuri_bali_earrings/scene.gltf",
@@ -21,8 +25,10 @@ export class TryOnEarringsRepository{
 			]
 		},
 		{
-			buttonId: "#earring2",
+			buttonId: "earring2",
+			buttonImagePath:"../../../assets/models/louboutin_earring/thumbnail.png",
 			visible: false,
+			loaded:undefined,
 			elements:[
 				{
 					path: "../../../assets/models/louboutin_earring/scene.gltf",
@@ -41,8 +47,10 @@ export class TryOnEarringsRepository{
 			]
 		},
 		{
-			buttonId: "#earring3",
+			buttonId: "earring3",
+			buttonImagePath:"../../../assets/models/ChinaEarring/thumbnail.png",
 			visible: false,
+			loaded:undefined,
 			elements:[
 				{
 					path: "../../../assets/models/ChinaEarring/scene.gltf",

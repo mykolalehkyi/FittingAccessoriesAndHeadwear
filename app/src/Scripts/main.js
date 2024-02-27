@@ -1,102 +1,171 @@
 import { loadGLTF, loadRGBE } from "../../../libs/loader.js";
-import Stats from "../../../libs/three.js-r132/examples/jsm/libs/stats.module.js";
-import { GUI } from "../../../libs/three.js-r132/examples/jsm/libs/dat.gui.module.js";
 import { TryOnService } from "./Services/try-on-service.js";
-const THREE = window.MINDAR.FACE.THREE;
+import { GuiHelper } from "./Helper/gui-helper.js";
+import { StatsHelper } from "./Helper/stats-helper.js";
+export const THREE = window.MINDAR.FACE.THREE;
 class AppRun {
     constructor() {
         this.tryOnService = new TryOnService();
-        this.capture = (mindarThree) => {
-            const { video, renderer, scene, camera, } = mindarThree;
-            const renderCanvas = renderer.domElement;
-            // Output canvas
-            const canvas = document.createElement("canvas");
-            const context = canvas.getContext("2d");
-            canvas.width = renderCanvas.width;
-            canvas.height = renderCanvas.height;
-            const sx = (((video.clientWidth - renderCanvas.clientWidth) / 2) *
-                video.videoWidth) /
-                video.clientWidth;
-            const sy = (((video.clientHeight - renderCanvas.clientHeight) / 2) *
-                video.videoHeight) /
-                video.clientHeight;
-            const sw = video.videoWidth - sx * 2;
-            const sh = video.videoHeight - sy * 2;
-            context.drawImage(video, sx, sy, sw, sh, 0, 0, canvas.width, canvas.height);
-            renderer.preserveDrawingBuffer = true;
-            renderer.render(scene, camera); // empty if not run
-            context.drawImage(renderCanvas, 0, 0, canvas.width, canvas.height);
-            renderer.preserveDrawingBuffer = false;
-            const data = canvas.toDataURL("image/png");
-            return data;
+        this.guiHelper = new GuiHelper();
+        this.statsHelper = new StatsHelper();
+        this.controls = {
+            selections: () => document.querySelector("#selections"),
         };
         this.init();
+    }
+    capture(mindarThree) {
+        const { video, renderer, scene, camera } = mindarThree;
+        const renderCanvas = renderer.domElement;
+        // Output canvas
+        const canvas = document.createElement("canvas");
+        const context = canvas.getContext("2d");
+        canvas.width = renderCanvas.width;
+        canvas.height = renderCanvas.height;
+        const sx = (((video.clientWidth - renderCanvas.clientWidth) / 2) *
+            video.videoWidth) /
+            video.clientWidth;
+        const sy = (((video.clientHeight - renderCanvas.clientHeight) / 2) *
+            video.videoHeight) /
+            video.clientHeight;
+        const sw = video.videoWidth - sx * 2;
+        const sh = video.videoHeight - sy * 2;
+        context.drawImage(video, sx, sy, sw, sh, 0, 0, canvas.width, canvas.height);
+        renderer.preserveDrawingBuffer = true;
+        renderer.render(scene, camera); // empty if not run
+        context.drawImage(renderCanvas, 0, 0, canvas.width, canvas.height);
+        renderer.preserveDrawingBuffer = false;
+        const data = canvas.toDataURL("image/png");
+        return data;
     }
     init() {
         document.addEventListener("DOMContentLoaded", () => {
             const start = async () => {
-                //mockWithVideo('../../assets/mock-videos/face1.mp4');
-                const mindarThree = new window.MINDAR.FACE.MindARThree({
+                // mockWithVideo('../../../assets/mock-videos/face2.mp4');
+                const mindarThree = new (window).MINDAR.FACE.MindARThree({
                     container: document.body,
                 });
                 const { renderer, scene, camera } = mindarThree;
-                this.gui = this.addGui();
+                this.guiHelper.addGui();
                 let occluder = await this.addOccluder(mindarThree);
-                //Adding light
+                // //Adding light
                 // const pointLight: THREEts.PointLight = this.addPointLight(scene);
-                // this.addPointLightToGui(this.gui, pointLight);
-                // const directionalLight = this.addDirectionalLight(scene);
-                // this.addDirectionalLightToGui(this.gui, directionalLight.light);
-                // directionalLight.light.target = occluder.scene;
-                // const hemisphereLight: THREEts.HemisphereLight = this.addHemisphereLight(scene);
-                // this.addHemisphereLightToGui(this.gui, hemisphereLight);
+                // this.guiHelper.addPointLightToGui(pointLight);
+                const directionalLight = this.addDirectionalLight(scene);
+                this.guiHelper.addDirectionalLightToGui(directionalLight.light);
+                directionalLight.light.target = occluder.scene;
+                // const hemisphereLight: THREEts.HemisphereLight =
+                //   this.addHemisphereLight(scene);
+                // this.guiHelper.addHemisphereLightToGui(hemisphereLight);
                 const background = await this.addBackgroundToScene(scene);
-                await this.addModelsToScene(mindarThree);
+                this.addTryOnButtons(mindarThree);
                 this.initPreviewShare(mindarThree);
-                const stats = this.addStats();
+                this.statsHelper.addStatsFPS();
+                this.statsHelper.addStatsMB();
+                this.statsHelper.addStatsMS();
                 await mindarThree.start();
                 renderer.setAnimationLoop(() => {
                     renderer.render(scene, camera);
-                    stats.update();
-                    //   directionalLight.helper.update();
+                    this.statsHelper.getStatsFPS().update();
+                    this.statsHelper.getStatsMB().update();
+                    this.statsHelper.getStatsMS().update();
+                    directionalLight.helper.update();
                 });
             };
             start();
         });
     }
-    async addModelsToScene(mindarThree) {
+    addTryOnButtons(mindarThree) {
+        let that = this;
         const tryOnModels = this.tryOnService.getTryOnModels();
         for (const tryOnModel of tryOnModels) {
-            const loadedModels = [];
-            for (let i = 0; i < tryOnModel.elements.length; i++) {
-                const element = tryOnModel.elements[i];
-                const loaded = await loadGLTF(element.path);
-                loaded.scene.rotation.set(element.rotation[0], element.rotation[1], element.rotation[2]);
-                loaded.scene.position.set(element.position[0], element.position[1], element.position[2]);
-                loaded.scene.scale.set(element.scale[0], element.scale[1], element.scale[2]);
-                // loaded.scene.environment = background;
-                const anchor = mindarThree.addAnchor(element.anchor);
-                anchor.group.add(loaded.scene);
-                loadedModels.push(loaded);
-                this.addModelToGui(this.gui, tryOnModel.buttonId + " " + i, loaded.scene);
-            }
-            const button = document.querySelector(tryOnModel.buttonId);
-            this.setVisible(button, loadedModels, tryOnModel.visible);
-            button.addEventListener("click", () => {
+            const imgElement = this.addImgButtonToView(tryOnModel);
+            imgElement.addEventListener("click", async () => {
+                if (tryOnModel.loaded == undefined) {
+                    tryOnModel.loaded = await this.loadTryOnModel(tryOnModel, mindarThree);
+                }
                 tryOnModel.visible = !tryOnModel.visible;
-                this.setVisible(button, loadedModels, tryOnModel.visible);
+                if (!tryOnModel.visible) {
+                    this.removeTryOnModel(tryOnModel, that, mindarThree);
+                }
+                this.buttonClassSelected(imgElement, tryOnModel.loaded, tryOnModel.visible);
             });
         }
     }
-    setVisible(button, models, visible) {
+    addImgButtonToView(tryOnModel) {
+        let that = this;
+        const imgElement = document.createElement("img");
+        imgElement.id = tryOnModel.buttonId;
+        imgElement.src = tryOnModel.buttonImagePath;
+        that.controls.selections().appendChild(imgElement);
+        return imgElement;
+    }
+    removeTryOnModel(tryOnModel, that, mindarThree) {
+        for (let i = 0; i < tryOnModel.loaded.length; i++) {
+            const model = tryOnModel.loaded[i];
+            that.removeGltfModel(model.scene, mindarThree);
+            this.guiHelper.removeFolderByName(tryOnModel.buttonId + i);
+        }
+        tryOnModel.loaded = undefined;
+    }
+    removeGltfModel(gltfModel, mindarThree) {
+        if (gltfModel) {
+            gltfModel.traverse(function (child) {
+                if (child instanceof THREE.Mesh) {
+                    child.geometry.dispose();
+                    if (child.material instanceof Array) {
+                        child.material.forEach(function (material) {
+                            material.dispose();
+                        });
+                    }
+                    else {
+                        child.material.dispose();
+                    }
+                }
+            });
+            // mindarThree.scene.remove(gltfModel);
+            gltfModel.removeFromParent();
+        }
+    }
+    async loadTryOnModel(tryOnModel, mindarThree) {
+        const loadedModels = [];
+        for (let i = 0; i < tryOnModel.elements.length; i++) {
+            const element = tryOnModel.elements[i];
+            const loaded = await loadGLTF(element.path);
+            loaded.scene.rotation.set(element.rotation[0], element.rotation[1], element.rotation[2]);
+            loaded.scene.position.set(element.position[0], element.position[1], element.position[2]);
+            loaded.scene.scale.set(element.scale[0], element.scale[1], element.scale[2]);
+            // loaded.scene.environment = background;
+            const anchor = mindarThree.addAnchor(element.anchor);
+            anchor.group.add(loaded.scene);
+            loadedModels.push(loaded);
+            this.guiHelper.addModelToGui(tryOnModel.buttonId + i, loaded.scene);
+        }
+        return loadedModels;
+    }
+    buttonClassSelected(button, models, visible) {
         if (visible) {
             button.classList.add("selected");
         }
         else {
             button.classList.remove("selected");
         }
-        models.forEach((model) => {
-            model.scene.visible = visible;
+        if (models) {
+            models.forEach((model) => {
+                model.scene.visible = visible;
+            });
+        }
+    }
+    stringifySafe(obj) {
+        const seen = new WeakSet();
+        return JSON.stringify(obj, (key, value) => {
+            if (typeof value === "object" && value !== null) {
+                if (seen.has(value)) {
+                    // Circular reference found, replace with placeholder
+                    return "[Circular]";
+                }
+                seen.add(value);
+            }
+            return value;
         });
     }
     initPreviewShare(mindarThree) {
@@ -138,56 +207,6 @@ class AppRun {
             });
         });
     }
-    addStats() {
-        const stats = Stats();
-        document.body.appendChild(stats.dom);
-        return stats;
-    }
-    addGui() {
-        const gui = new GUI();
-        return gui;
-    }
-    addPointLightToGui(gui, light) {
-        const pointLightFolder = gui.addFolder("Point Light");
-        pointLightFolder.add(light.position, "x", -1000, 1000);
-        pointLightFolder.add(light.position, "y", -1000, 1000);
-        pointLightFolder.add(light.position, "z", -1000, 1000);
-        pointLightFolder.add(light, "intensity", -10, 10);
-        pointLightFolder.open();
-    }
-    addDirectionalLightToGui(gui, light) {
-        const lightFolder = gui.addFolder("Directional Light");
-        lightFolder.add(light.position, "x", -1000, 1000);
-        lightFolder.add(light.position, "y", -1000, 1000);
-        lightFolder.add(light.position, "z", -1000, 1000);
-        lightFolder.add(light, "intensity", -10, 10);
-        // light.target.
-        lightFolder.open();
-    }
-    addHemisphereLightToGui(gui, light) {
-        const lightFolder = gui.addFolder("Hemisphere Light");
-        lightFolder.add(light.position, "x", -1000, 1000);
-        lightFolder.add(light.position, "y", -1000, 1000);
-        lightFolder.add(light.position, "z", -1000, 1000);
-        lightFolder.add(light, "intensity", -10, 10);
-        // light.target.
-        lightFolder.open();
-    }
-    addModelToGui(gui, name, model) {
-        const modelFolder = gui.addFolder(name);
-        const positionFolder = modelFolder.addFolder("position");
-        positionFolder.add(model.position, "x", -10, 10);
-        positionFolder.add(model.position, "y", -10, 10);
-        positionFolder.add(model.position, "z", -10, 10);
-        const scaleFolder = modelFolder.addFolder("scale");
-        scaleFolder.add(model.scale, "x", -10, 10);
-        scaleFolder.add(model.scale, "y", -10, 10);
-        scaleFolder.add(model.scale, "z", -10, 10);
-        const rotationFolder = modelFolder.addFolder("rotation");
-        rotationFolder.add(model.rotation, "x", -10, 10);
-        rotationFolder.add(model.rotation, "y", -10, 10);
-        rotationFolder.add(model.rotation, "z", -10, 10);
-    }
     async addOccluder(mindarThree) {
         const occluder = await loadGLTF("../../../assets/models/sparkar-occluder/headOccluder.glb");
         occluder.scene.scale.set(0.065, 0.065, 0.065);
@@ -220,7 +239,7 @@ class AppRun {
     }
     addDirectionalLight(scene) {
         const light = new THREE.DirectionalLight(0xffffff, 1);
-        light.position.set(-0.5, 1, 1);
+        light.position.set(0, 300, 300);
         scene.add(light);
         const helper = new THREE.DirectionalLightHelper(light, 20);
         scene.add(helper);

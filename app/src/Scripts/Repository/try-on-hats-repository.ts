@@ -1,8 +1,12 @@
+import { TryOnModel } from "../Models/try-on-model";
+
 export class TryOnHatsRepository{
 	private hats: TryOnModel[] = [
 		{
-			buttonId: "#hat1",
-			visible: true,
+			buttonId: "hat1",
+			buttonImagePath:"../../../assets/models/CouboyHat/thumbnail.png",
+			visible: false,
+			loaded:undefined,
 			elements:[
 				{
 					path: "../../../assets/models/CouboyHat/scene.gltf",
@@ -14,8 +18,10 @@ export class TryOnHatsRepository{
 			]
 		},
 		{
-			buttonId: "#hat2",
+			buttonId: "hat2",
+			buttonImagePath:"../../../assets/models/PixelSantaHat/thumbnail.png",
 			visible: false,
+			loaded:undefined,
 			elements:[
 				{
 					path: "../../../assets/models/PixelSantaHat/scene.gltf",
@@ -27,8 +33,10 @@ export class TryOnHatsRepository{
 			]
 		},
 		{
-			buttonId: "#hat3",
+			buttonId: "hat3",
+			buttonImagePath:"../../../assets/models/SailorHat/thumbnail.png",
 			visible: false,
+			loaded:undefined,
 			elements:[
 				{
 					path: "../../../assets/models/SailorHat/scene.gltf",
