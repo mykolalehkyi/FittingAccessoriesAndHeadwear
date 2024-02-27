@@ -110,15 +110,12 @@ class AppRun {
     removeGltfModel(gltfModel, mindarThree) {
         if (gltfModel) {
             gltfModel.traverse(function (child) {
-                if (child instanceof THREE.Mesh) {
-                    child.geometry.dispose();
-                    if (child.material instanceof Array) {
-                        child.material.forEach(function (material) {
-                            material.dispose();
-                        });
-                    }
-                    else {
-                        child.material.dispose();
+                if (child.isMesh) {
+                    child.geometry.dispose(); // Dispose geometry
+                    child.material.dispose(); // Dispose material
+                    // If the material has textures, dispose them too
+                    if (child.material.map) {
+                        child.material.map.dispose();
                     }
                 }
             });

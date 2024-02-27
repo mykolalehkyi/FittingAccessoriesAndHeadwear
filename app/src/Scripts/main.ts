@@ -159,17 +159,15 @@ class AppRun {
 
   private removeGltfModel(gltfModel: THREEts.Group, mindarThree: MindARThree) {
     if (gltfModel) {
-		gltfModel.traverse(function(child) {
-			if (child instanceof THREE.Mesh) {
-				(<THREEts.Mesh>child).geometry.dispose();
-				if ((<THREEts.Mesh>child).material instanceof Array) {
-					(<THREEts.Material[]>(<THREEts.Mesh>child).material).forEach(function(material) {
-						material.dispose();
-					});
-				} else {
-					(<THREEts.Material>(<THREEts.Mesh>child).material).dispose();
-				}
-			}
+		gltfModel.traverse(function(child:any) {
+			if (child.isMesh) {
+                child.geometry.dispose(); // Dispose geometry
+                child.material.dispose(); // Dispose material
+
+                // If the material has textures, dispose them too
+                if (child.material.map) {
+                    child.material.map.dispose();
+                }
 		});
 
       // mindarThree.scene.remove(gltfModel);
