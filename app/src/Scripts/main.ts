@@ -70,17 +70,17 @@ class AppRun {
 
         let occluder = await this.addOccluder(mindarThree);
 
-        // //Adding light
-        // const pointLight: THREEts.PointLight = this.addPointLight(scene);
-        // this.guiHelper.addPointLightToGui(pointLight);
+        //Adding light
+        const pointLight: THREEts.PointLight = this.addPointLight(scene);
+        this.guiHelper.addPointLightToGui(pointLight);
 
         const directionalLight = this.addDirectionalLight(scene);
         this.guiHelper.addDirectionalLightToGui(directionalLight.light);
         directionalLight.light.target = occluder.scene;
 
-        // const hemisphereLight: THREEts.HemisphereLight =
-        //   this.addHemisphereLight(scene);
-        // this.guiHelper.addHemisphereLightToGui(hemisphereLight);
+        const hemisphereLight: THREEts.HemisphereLight =
+          this.addHemisphereLight(scene);
+        this.guiHelper.addHemisphereLightToGui(hemisphereLight);
 
         const background: THREEts.DataTexture = await this.addBackgroundToScene(
           scene
@@ -126,9 +126,13 @@ class AppRun {
           this.removeTryOnModel(tryOnModel, that, mindarThree);
         }
 
+		this.setModelsVisible(
+			tryOnModel.loaded,
+			tryOnModel.visible
+		);
+
         this.buttonClassSelected(
           imgElement,
-          tryOnModel.loaded,
           tryOnModel.visible
         );
       });
@@ -209,17 +213,20 @@ class AppRun {
     return loadedModels;
   }
 
-  private buttonClassSelected(button, models: GltfLoaded[], visible: boolean) {
+  private buttonClassSelected(button, visible: boolean) {
     if (visible) {
       button.classList.add("selected");
     } else {
       button.classList.remove("selected");
     }
+  }
+
+  private setModelsVisible(models: GltfLoaded[], visible: boolean){
     if (models) {
-      models.forEach((model) => {
-        model.scene.visible = visible;
-      });
-    }
+		models.forEach((model) => {
+		  model.scene.visible = visible;
+		});
+	  }
   }
 
   private stringifySafe(obj: any):string {

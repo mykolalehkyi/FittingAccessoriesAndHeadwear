@@ -47,15 +47,14 @@ class AppRun {
                 const { renderer, scene, camera } = mindarThree;
                 this.guiHelper.addGui();
                 let occluder = await this.addOccluder(mindarThree);
-                // //Adding light
-                // const pointLight: THREEts.PointLight = this.addPointLight(scene);
-                // this.guiHelper.addPointLightToGui(pointLight);
+                //Adding light
+                const pointLight = this.addPointLight(scene);
+                this.guiHelper.addPointLightToGui(pointLight);
                 const directionalLight = this.addDirectionalLight(scene);
                 this.guiHelper.addDirectionalLightToGui(directionalLight.light);
                 directionalLight.light.target = occluder.scene;
-                // const hemisphereLight: THREEts.HemisphereLight =
-                //   this.addHemisphereLight(scene);
-                // this.guiHelper.addHemisphereLightToGui(hemisphereLight);
+                const hemisphereLight = this.addHemisphereLight(scene);
+                this.guiHelper.addHemisphereLightToGui(hemisphereLight);
                 const background = await this.addBackgroundToScene(scene);
                 this.addTryOnButtons(mindarThree);
                 this.initPreviewShare(mindarThree);
@@ -87,7 +86,8 @@ class AppRun {
                 if (!tryOnModel.visible) {
                     this.removeTryOnModel(tryOnModel, that, mindarThree);
                 }
-                this.buttonClassSelected(imgElement, tryOnModel.loaded, tryOnModel.visible);
+                this.setModelsVisible(tryOnModel.loaded, tryOnModel.visible);
+                this.buttonClassSelected(imgElement, tryOnModel.visible);
             });
         }
     }
@@ -139,13 +139,15 @@ class AppRun {
         }
         return loadedModels;
     }
-    buttonClassSelected(button, models, visible) {
+    buttonClassSelected(button, visible) {
         if (visible) {
             button.classList.add("selected");
         }
         else {
             button.classList.remove("selected");
         }
+    }
+    setModelsVisible(models, visible) {
         if (models) {
             models.forEach((model) => {
                 model.scene.visible = visible;
