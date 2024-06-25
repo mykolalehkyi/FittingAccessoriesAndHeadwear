@@ -38,40 +38,77 @@ class AppRun {
         return data;
     }
     init() {
+        let that = this;
         document.addEventListener("DOMContentLoaded", () => {
             const start = async () => {
                 // mockWithVideo('../../../assets/mock-videos/face2.mp4');
-                const mindarThree = new (window).MINDAR.FACE.MindARThree({
+                that.mindarThree = new (window).MINDAR.FACE.MindARThree({
                     container: document.body,
                 });
-                const { renderer, scene, camera } = mindarThree;
+                const { renderer, scene, camera } = that.mindarThree;
                 this.guiHelper.addGui();
-                let occluder = await this.addOccluder(mindarThree);
+                let occluder = await this.addOccluder(that.mindarThree);
                 //Adding light
                 const pointLight = this.addPointLight(scene);
                 this.guiHelper.addPointLightToGui(pointLight);
                 const directionalLight = this.addDirectionalLight(scene);
                 this.guiHelper.addDirectionalLightToGui(directionalLight.light);
                 directionalLight.light.target = occluder.scene;
-                const hemisphereLight = this.addHemisphereLight(scene);
-                this.guiHelper.addHemisphereLightToGui(hemisphereLight);
+                // const hemisphereLight: THREEts.HemisphereLight =
+                //   this.addHemisphereLight(scene);
+                // this.guiHelper.addHemisphereLightToGui(hemisphereLight);
                 const background = await this.addBackgroundToScene(scene);
-                this.addTryOnButtons(mindarThree);
-                this.initPreviewShare(mindarThree);
+                this.guiHelper.addBackgroundToGui(scene, background);
+                this.addTryOnButtons(that.mindarThree);
+                this.initPreviewShare(that.mindarThree);
                 this.statsHelper.addStatsFPS();
                 this.statsHelper.addStatsMB();
                 this.statsHelper.addStatsMS();
-                await mindarThree.start();
+                await that.mindarThree.start();
                 renderer.setAnimationLoop(() => {
                     renderer.render(scene, camera);
                     this.statsHelper.getStatsFPS().update();
                     this.statsHelper.getStatsMB().update();
                     this.statsHelper.getStatsMS().update();
                     directionalLight.helper.update();
+                    let lightIntensity = that.calculateLightIntensity(that.mindarThree);
+                    that.updateLightIntesivity(pointLight, lightIntensity);
+                    that.updateLightIntesivity(directionalLight.light, lightIntensity);
                 });
             };
             start();
         });
+    }
+    updateLightIntesivity(light, lightIntensity) {
+        light.intensity = lightIntensity;
+    }
+    calculateLightIntensity(mindarThree) {
+        let that = this;
+        const width = mindarThree.renderer.domElement.width;
+        const height = mindarThree.renderer.domElement.height;
+        const canvas = document.createElement('canvas');
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(mindarThree.video, 0, 0, width, height);
+        const imageData = ctx.getImageData(0, 0, width, height);
+        const rgbaData = imageData.data;
+        let averageLuminosity = 0;
+        for (let i = 0; i < rgbaData.length / 4; i += 4) {
+            let R = rgbaData[i];
+            let G = rgbaData[i + 1];
+            let B = rgbaData[i + 2];
+            let luminosity = that.luminosity(R, G, B);
+            averageLuminosity += luminosity;
+        }
+        // console.log(averageLuminosity);
+        averageLuminosity = averageLuminosity / (rgbaData.length / 4) / 50 * 2;
+        averageLuminosity = Math.min(averageLuminosity, 2);
+        // console.log(averageLuminosity);
+        return averageLuminosity;
+    }
+    luminosity(r, g, b) {
+        return 0.2126 * r + 0.7152 * g + 0.0722 * b;
     }
     addTryOnButtons(mindarThree) {
         let that = this;
@@ -173,6 +210,7 @@ class AppRun {
         const preview = document.querySelector("#preview");
         const previewShare = document.querySelector("#preview-share");
         document.querySelector("#capture")?.addEventListener("click", () => {
+            // this.calculateLightIntensity(mindarThree);
             const data = this.capture(mindarThree);
             preview.style.visibility = "visible";
             previewImage.src = data;
@@ -241,7 +279,6 @@ class AppRun {
         light.position.set(0, 300, 300);
         scene.add(light);
         const helper = new THREE.DirectionalLightHelper(light, 20);
-        scene.add(helper);
         return { light, helper };
     }
     addPointLight(scene) {

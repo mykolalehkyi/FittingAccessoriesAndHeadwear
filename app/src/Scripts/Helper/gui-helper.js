@@ -7,6 +7,22 @@ export class GuiHelper {
         this.gui = new GUI();
         return this.gui;
     }
+    addBackgroundToGui(scene, background) {
+        let folderName = "Environment";
+        const backgroundFolder = this.gui.addFolder(folderName);
+        this.originalBackground = background; // Store the original background
+        // Add a toggle for visibility
+        const visibilityControl = { 'Environment Visible': true };
+        backgroundFolder.add(visibilityControl, 'Environment Visible').onChange((value) => {
+            if (value) {
+                scene.environment = this.originalBackground; // Reassign the original background
+            }
+            else {
+                scene.environment = null; // Remove the background
+            }
+        });
+        this.folders[folderName] = backgroundFolder; // Store reference for potential removal
+    }
     addPointLightToGui(light) {
         let folderName = "Point Light";
         const lightFolder = this.gui.addFolder(folderName);

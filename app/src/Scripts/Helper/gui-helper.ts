@@ -5,10 +5,28 @@ import { GUI } from "../../../../libs/three.js-r132/examples/jsm/libs/dat.gui.mo
 export class GuiHelper {
 	private gui: GUIts.GUI;
 	private folders = {}; // Object to store folder references
+	private originalBackground: THREEts.DataTexture;
 
   public addGui(): GUIts.GUI {
     this.gui = new GUI();
     return this.gui;
+  }
+
+  public addBackgroundToGui(scene: THREEts.Scene, background: THREEts.DataTexture) {
+	let folderName="Environment";
+	const backgroundFolder = this.gui.addFolder(folderName);
+    this.originalBackground = background; // Store the original background
+    
+    // Add a toggle for visibility
+    const visibilityControl = { 'Environment Visible': true };
+    backgroundFolder.add(visibilityControl, 'Environment Visible').onChange((value: boolean) => {
+      if (value) {
+        scene.environment = this.originalBackground; // Reassign the original background
+      } else {
+        scene.environment = null; // Remove the background
+      }
+    });
+    this.folders[folderName] = backgroundFolder; // Store reference for potential removal
   }
 
   public addPointLightToGui(light: THREEts.PointLight) {
